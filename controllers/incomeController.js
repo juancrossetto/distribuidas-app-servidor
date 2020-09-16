@@ -28,7 +28,7 @@ exports.getIncomes = async (req, res) => {
         date: -1,
       });
       console.log(incomes);
-      res.json({});
+      res.json({ incomes });
     } else {
       return res.status(400).json({ msg: "No se ha indicado un email" });
     }
