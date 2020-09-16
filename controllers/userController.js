@@ -109,7 +109,7 @@ exports.deleteUser = async (req, res) => {
     let user = await User.findById(req.params.id);
 
     if (!user) {
-      return res.status(404).json({ msg: "No existe el usaurio" });
+      return res.status(404).json({ msg: "No existe el usuario" });
     }
 
     await User.findOneAndRemove({ _id: req.params.id });
