@@ -22,6 +22,10 @@ const IncomeSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  email: {
+    type: String,
+    require: true,
+  },
   id: {
     type: mongoose.Schema.Types.ObjectId,
     index: true,
