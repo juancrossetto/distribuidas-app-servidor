@@ -23,7 +23,7 @@ exports.getExpenses = async (req, res) => {
 };
 
 // alta de Egreso
-exports.createIncome = async (req, res) => {
+exports.createExpense = async (req, res) => {
   try {
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
@@ -42,7 +42,7 @@ exports.createIncome = async (req, res) => {
 };
 
 // baja de egreso
-exports.deleteIncome = async (req, res) => {
+exports.deleteExpense = async (req, res) => {
   try {
     let expense = await Expense.findById(req.params.id);
 
