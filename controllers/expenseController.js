@@ -44,7 +44,7 @@ exports.createIncome = async (req, res) => {
 // baja de egreso
 exports.deleteIncome = async (req, res) => {
   try {
-    let expense = await expense.findById(req.params.id);
+    let expense = await Expense.findById(req.params.id);
 
     if (!expense) {
       return res.status(404).json({ msg: "No existe el Egreso" });
