@@ -3,6 +3,28 @@ const bcryptjs = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
+
+// get prestamos 
+exports.getLoans = async (req, res) => {
+  try {
+    const { email } = req.params;
+    console.log(email);
+    if (email) {
+      loans = await Loan.find({ email: email }).sort({
+        date: -1,
+      });
+      console.log(loans);
+      res.json({ loans });
+    } else {
+      return res.status(400).json({ msg: "No se ha indicado un email" });
+    }
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ msg: "Hubo un error al Obtener los prestamos" });
+  }
+};
+
 exports.createLoan = async (req, res) => {
     try {
       const errores = validationResult(req);
