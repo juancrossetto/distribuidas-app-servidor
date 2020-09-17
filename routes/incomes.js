@@ -9,7 +9,7 @@ router.post(
   [
     check("amount", "El Monto es obligatorio.").not().isEmpty(),
     check("category", "La Categoría es obligatoria").not().isEmpty(),
-    check("bankAccount", "La cuenta bancaria es obligatoria").not().isEmpty(),
+    check("paymentMethod", "El método de Cobro es obligatorio").not().isEmpty(),
   ],
   incomeController.createIncome
 );
