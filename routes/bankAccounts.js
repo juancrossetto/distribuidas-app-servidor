@@ -7,14 +7,18 @@ const { check } = require("express-validator");
 router.post(
   "/",
   [
-    check("amount", "El Monto es obligatorio.").not().isEmpty(),
-    check("category", "La Categoría es obligatoria").not().isEmpty(),
-    check("method_id", "El metodo es obligatorio").not().isEmpty(),
+    check("email", "El Email es obligatorio.").not().isEmpty(),
+    check("cbu", "El CBU es obligatorio").not().isEmpty(),
+    check("balance", "El metodo es obligatorio").isNumeric()
   ],
   bankAccountController.createBankAccount
 );
 
 // api/bankaccounts
 router.get("/:email", bankAccountController.getBankAccounts);
+
+router.put("/changeBalance", bankAccountController.changeBalance );
+
+
 
 module.exports = router;
