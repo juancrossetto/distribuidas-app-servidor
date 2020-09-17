@@ -21,8 +21,8 @@ const port = process.env.PORT || 4000;
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/incomes", require("./routes/incomes"));
-// app.use("/api/expenses", require("./routes/expenses"));
-// app.use("/api/loans", require("./routes/loans"));
+app.use("/api/expenses", require("./routes/expenses"));
+app.use("/api/loans", require("./routes/loans"));
 // app.use("/api/investments", require("./routes/investments"));
 // app.use("/api/bankaccounts", require("./routes/bankAccounts"));
 
