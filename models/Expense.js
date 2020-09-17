@@ -38,6 +38,10 @@ const ExpenseSchema = mongoose.Schema({
     type: Buffer,
     require: false,
   },
+  email: {
+    type: String,
+    require: true,
+  },
   id: {
     type: mongoose.Schema.Types.ObjectId,
     index: true,
