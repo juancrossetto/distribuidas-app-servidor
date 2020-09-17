@@ -30,7 +30,7 @@ exports.authenticateUser = async (req, res) => {
   }
 };
 
-// Obtiene que usuario esta autenticado
+// Obtiene que usuario esta autenticado.
 exports.userAuthenticated = async (req, res) => {
   try {
     //obtenemos todo el usuario menos el password, por seguridad
