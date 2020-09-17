@@ -78,7 +78,7 @@ exports.getUserByEmail = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    // Extraer el proyecto y comprobar si existe
+    // Extraer el usuario y comprobar si existe
     const { name, email } = req.body;
 
     // Si el Usuario existe o no
