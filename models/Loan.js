@@ -6,6 +6,10 @@ const LoanSchema = mongoose.Schema({
     type: String,
     require: true,
     },
+  amount:{
+    type: Number,
+    require: true,
+  },
   type: {
     type: String,
     trim: true,
