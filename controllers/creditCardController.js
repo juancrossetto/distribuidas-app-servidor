@@ -57,3 +57,26 @@ exports.deleteCreditCard = async (req, res) => {
     res.status(500).send("Hubo un error");
   }
 };
+
+// modificacion
+exports.updateCreditCard = async (req, res) => {
+  try {
+    const { email, closeDateSummary, dueDateSummary } = req.body;
+    const creditCard = await CreditCard.findOne({ email });
+    if (!creditCard) {
+      return res
+        .status(400)
+        .json({ msg: "La tarjeta no se encuentra registrada" });
+    } else {
+      creditCard.closeDateSummary = closeDateSummary;
+      creditCard.dueDateSummary = dueDateSummary;
+
+      await CreditCard.findOneAndUpdate({ _id: creditCard._id }, creditCard, {
+        new: false,
+      });
+      res.json({ creditCard });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: "Hubo un error" });
+  }
+};

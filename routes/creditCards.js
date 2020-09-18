@@ -27,4 +27,7 @@ router.post(
 // api/creditCards
 router.get("/:email", creditCardController.getCreditCards);
 
+// api/creditCards
+router.put("/", [], creditCardController.updateCreditCard);
+
 module.exports = router;
