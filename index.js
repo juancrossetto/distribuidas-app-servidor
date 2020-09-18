@@ -25,6 +25,7 @@ app.use("/api/expenses", require("./routes/expenses"));
 app.use("/api/loans", require("./routes/loans"));
 app.use("/api/investments", require("./routes/investments"));
 app.use("/api/bankaccounts", require("./routes/bankAccounts"));
+app.use("/api/creditCards", require("./routes/creditCards"));
 
 // arrancar la app
 app.listen(port, "0.0.0.0", () => {
