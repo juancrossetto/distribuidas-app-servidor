@@ -5,42 +5,52 @@ const ExpenseSchema = mongoose.Schema({
   amount: {
     type: String,
     trim: true,
+    trim: true,
   },
-  method_id: {
-    type: Number,
-    require: true,
-  },
-  method: {
+  paymentType: {
     type: String,
     require: true,
+    trim: true,
+  },
+  expenseType: {
+    type: String,
+    require: true,
+    trim: true,
   },
   detail: {
     type: String,
+    require: false,
     trim: true,
-  },
-  type: {
-    type: String,
-    require: true,
   },
   category: {
     type: String,
-    require: true,
+    trim: true,
+    require: false,
+  },
+  fees: {
+    type: String,
+    trim: true,
+    require: false,
   },
   date: {
     type: String,
-    require: true,
+    trim: true,
+    require: false,
   },
-  is_fee: {
-    type: Boolean,
-    require: true,
+  area: {
+    type: String,
+    trim: true,
+    require: false,
   },
-  receipt: {
-    type: Buffer,
+  voucher: {
+    type: String,
+    trim: true,
     require: false,
   },
   email: {
     type: String,
-    require: true,
+    trim: true,
+    require: false,
   },
   id: {
     type: mongoose.Schema.Types.ObjectId,

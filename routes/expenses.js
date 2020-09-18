@@ -8,8 +8,8 @@ router.post(
   "/",
   [
     check("amount", "El Monto es obligatorio.").not().isEmpty(),
-    check("category", "La Categoría es obligatoria").not().isEmpty(),
-    check("method_id", "El metodo es obligatorio").not().isEmpty(),
+    check("paymentType", "El medio de pago es obligatoria").not().isEmpty(),
+    check("expenseType", "El Tipo de egreso es obligatorio").not().isEmpty(),
   ],
   expenseController.createExpense
 );
