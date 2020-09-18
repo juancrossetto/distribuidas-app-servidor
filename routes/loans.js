@@ -8,13 +8,15 @@ router.post(
   "/",
   [
     check("amount", "El Monto es obligatorio.").not().isEmpty(),
-    check("category", "La Categoría es obligatoria").not().isEmpty(),
-    check("bankAccount", "La cuenta bancaria es obligatoria").not().isEmpty(),
+    check("amount", "El Monto es obligatorio.").isNumeric(),
+    check("email", "El mail es obligatorio").not().isEmpty(),
+    check("type", "El tipo es obligatorio").not().isEmpty(),
   ],
   loanController.createLoan
 );
 
 // api/loans
 router.get("/:email", loanController.getLoans);
+
 
 module.exports = router;
