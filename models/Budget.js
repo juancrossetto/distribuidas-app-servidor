@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 var id = mongoose.Types.ObjectId();
 
-const LoanSchema = mongoose.Schema({
+const BudgetSchema = mongoose.Schema({
   email: {
     type: String,
     require: true,
-    },
-  amount:{
+  },
+  category:{
+    type: String,
+    require: true,
+  },
+  amount: {
     type: Number,
     require: true,
   },
-  type: {
-    type: String,
-    trim: true,
-  },
-  expiration_date: {
+  date: {
     type: String,
     require: true,
   },
@@ -26,4 +26,4 @@ const LoanSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Loan", LoanSchema);
+module.exports = mongoose.model("Budget", BudgetSchema);

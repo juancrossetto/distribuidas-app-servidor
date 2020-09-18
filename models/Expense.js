@@ -5,7 +5,6 @@ const ExpenseSchema = mongoose.Schema({
   amount: {
     type: String,
     trim: true,
-    trim: true,
   },
   paymentType: {
     type: String,
