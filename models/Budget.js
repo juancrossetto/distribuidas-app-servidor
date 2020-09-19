@@ -15,7 +15,7 @@ const BudgetSchema = mongoose.Schema({
     require: true,
   },
   date: {
-    type: String,
+    type: Date,
     require: true,
   },
   id: {
