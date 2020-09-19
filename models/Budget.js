@@ -6,7 +6,7 @@ const BudgetSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  category:{
+  category: {
     type: String,
     require: true,
   },
@@ -15,7 +15,7 @@ const BudgetSchema = mongoose.Schema({
     require: true,
   },
   date: {
-    type: String,
+    type: Date,
     require: true,
   },
   id: {

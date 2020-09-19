@@ -5,8 +5,8 @@ const LoanSchema = mongoose.Schema({
   email: {
     type: String,
     require: true,
-    },
-  amount:{
+  },
+  amount: {
     type: Number,
     require: true,
   },
@@ -16,6 +16,10 @@ const LoanSchema = mongoose.Schema({
   },
   expiration_date: {
     type: String,
+    require: true,
+  },
+  date: {
+    type: Date,
     require: true,
   },
   id: {
