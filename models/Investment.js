@@ -7,7 +7,7 @@ const InvestmentSchema = mongoose.Schema({
     require: true,
   },
   amount: {
-    type: String,
+    type: Number,
     trim: true,
     require: true,
   },
@@ -15,13 +15,25 @@ const InvestmentSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  expiration_date: {
-    type: String,
+  days: {
+    type: Number,
     require: true,
   },
-  bank_account: {
+  interestRate: {
+    type: Number,
+    require: true,
+  },
+  bankAccount: {
     type: String,
     require: false,
+  },
+  date: {
+    type: Date,
+    require: true,
+  },
+  dueDate: {
+    type: Date,
+    require: true,
   },
   id: {
     type: mongoose.Schema.Types.ObjectId,

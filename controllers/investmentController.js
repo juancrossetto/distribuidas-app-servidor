@@ -1,7 +1,7 @@
 const Investment = require("../models/Investment");
 const { validationResult } = require("express-validator");
 
-// get inversiones 
+// get inversiones
 exports.getInvestments = async (req, res) => {
   try {
     const { email } = req.params;
@@ -29,10 +29,11 @@ exports.createInvestments = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
+
     // crea el nuevo egreso
     console.log(req.body);
     const investment = new Investment(req.body);
-
+    // investment.dueDate = investment.date.addDays(investment.days);
     await investment.save();
     res.json({ investment });
   } catch (error) {
@@ -52,11 +53,10 @@ exports.deleteInvestment = async (req, res) => {
 
     await Investment.findOneAndRemove({ _id: req.params.id });
     res.json({ msg: "Inversion Eliminada" });
-} catch (error) {
+  } catch (error) {
     console.log(error);
     res.status(500).send("Hubo un error");
   }
 };
 
 // modificacion de inversion
-
