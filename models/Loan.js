@@ -14,7 +14,11 @@ const LoanSchema = mongoose.Schema({
     type: String,
     trim: true,
   },
-  expiration_date: {
+  paymentMethod: {
+    type: String,
+    require: true,
+  },
+  bankAccount: {
     type: String,
     require: true,
   },
