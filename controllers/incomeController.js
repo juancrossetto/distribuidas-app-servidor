@@ -1,16 +1,14 @@
 const Income = require("../models/Income");
 const { validationResult } = require("express-validator");
 
-// get ingresos 
+// get ingresos
 exports.getIncomes = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log(email);
     if (email) {
       incomes = await Income.find({ email: email }).sort({
         date: -1,
       });
-      console.log(incomes);
       res.json({ incomes });
     } else {
       return res.status(400).json({ msg: "No se ha indicado un email" });
@@ -30,7 +28,6 @@ exports.createIncome = async (req, res) => {
       return res.status(400).json({ errores: errores.array() });
     }
     // crea el nuevo ingreso
-    console.log(req.body);
     const income = new Income(req.body);
 
     await income.save();
@@ -52,11 +49,10 @@ exports.deleteIncome = async (req, res) => {
 
     await Income.findOneAndRemove({ _id: req.params.id });
     res.json({ msg: "Ingreso Eliminado" });
-} catch (error) {
+  } catch (error) {
     console.log(error);
     res.status(500).send("Hubo un error");
   }
 };
 
 // modificacion de ingreso
-

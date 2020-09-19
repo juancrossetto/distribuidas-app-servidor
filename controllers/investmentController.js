@@ -5,12 +5,10 @@ const { validationResult } = require("express-validator");
 exports.getInvestments = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log(email);
     if (email) {
       investments = await Investment.find({ email: email }).sort({
         expiration_date: -1,
       });
-      console.log(investments);
       res.json({ investments });
     } else {
       return res.status(400).json({ msg: "No se ha indicado un email" });
@@ -30,10 +28,7 @@ exports.createInvestments = async (req, res) => {
       return res.status(400).json({ errores: errores.array() });
     }
 
-    // crea el nuevo egreso
-    console.log(req.body);
     const investment = new Investment(req.body);
-    // investment.dueDate = investment.date.addDays(investment.days);
     await investment.save();
     res.json({ investment });
   } catch (error) {

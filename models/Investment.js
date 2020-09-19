@@ -27,6 +27,10 @@ const InvestmentSchema = mongoose.Schema({
     type: String,
     require: false,
   },
+  autmomaticRenovation: {
+    type: Boolean,
+    require: false,
+  },
   date: {
     type: Date,
     require: true,
