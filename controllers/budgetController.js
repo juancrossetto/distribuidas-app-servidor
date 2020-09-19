@@ -58,3 +58,34 @@ exports.deleteBudget = async (req, res) => {
     res.status(500).send("Hubo un error");
   }
 };
+
+exports.getByType = async (req, res) => {
+  try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
+    };
+    const { email, month, year } = req.body;
+    if (email && month && year) {
+      budgets = await Budget.aggregate([
+        {$addFields: {  
+            "month" : {$month: '$date'},
+            "year": {$year: '$date'}}},
+        {$match: {
+          month: month,
+          year: year,
+          email:email
+        }
+      }]);
+      console.log(budgets);
+      res.json({ budgets });
+    } else {
+      return res.status(400).json({ msg: "Tiene que indicarse mail y mes" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .json({ msg: "Hubo un error al Obtener los prestamos" });
+  }
+};
