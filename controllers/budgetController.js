@@ -68,15 +68,27 @@ exports.getByType = async (req, res) => {
     const { email, month, year } = req.body;
     if (email && month && year) {
       budgets = await Budget.aggregate([
-        {$addFields: {  
+        {
+          $addFields: {  
             "month" : {$month: '$date'},
-            "year": {$year: '$date'}}},
-        {$match: {
+            "year": {$year: '$date'}}
+        },
+        {
+          $match: {
           month: month,
           year: year,
           email:email
-        }
-      }]);
+          }
+        },
+        {
+          $group: {
+             _id: "$category",
+             "TotalAmount": {
+                $sum: "$amount"
+             }
+          }
+       }   
+      ]);
       console.log(budgets);
       res.json({ budgets });
     } else {
