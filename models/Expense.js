@@ -3,13 +3,17 @@ var id = mongoose.Types.ObjectId();
 
 const ExpenseSchema = mongoose.Schema({
   amount: {
-    type: String,
+    type: Number,
     trim: true,
   },
   paymentType: {
     type: String,
     require: true,
     trim: true,
+  },
+  paymentId:{
+    type: String,
+    require: true,
   },
   expenseType: {
     type: String,

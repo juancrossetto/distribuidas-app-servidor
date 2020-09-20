@@ -17,4 +17,12 @@ router.post(
 // api/expenses
 router.get("/:email", expenseController.getExpenses);
 
+router.post(
+  "/getbytype",
+  [
+    check("paymentType", "El medio de pago es obligatoria").not().isEmpty(),
+  ],
+  expenseController.getExpensesByType
+);
+
 module.exports = router;
