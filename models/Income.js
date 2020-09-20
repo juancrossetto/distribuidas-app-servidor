@@ -3,10 +3,14 @@ var id = mongoose.Types.ObjectId();
 
 const IncomeSchema = mongoose.Schema({
   amount: {
-    type: String,
+    type: Number,
     trim: true,
   },
   category: {
+    type: String,
+    trim: true,
+  },
+  paymentMethod: {
     type: String,
     trim: true,
   },
@@ -19,7 +23,7 @@ const IncomeSchema = mongoose.Schema({
     trim: true,
   },
   date: {
-    type: String,
+    type: Date,
     require: true,
   },
   email: {

@@ -29,7 +29,6 @@ exports.createIncome = async (req, res) => {
     }
     // crea el nuevo ingreso
     const income = new Income(req.body);
-
     await income.save();
     res.json({ income });
   } catch (error) {
