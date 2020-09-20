@@ -18,11 +18,14 @@ router.post(
 router.get("/:email", expenseController.getExpenses);
 
 router.post(
-  "/getbytype",
+  "/getbypayment",
   [
-    check("paymentType", "El medio de pago es obligatoria").not().isEmpty(),
+    check("email", "El email es obligatorio").not().isEmpty(),
   ],
-  expenseController.getExpensesByType
+  expenseController.getExpensesByPayment
 );
+
+router.post("/monthlyexpenses", expenseController.getMontlyExpenses);
+
 
 module.exports = router;
