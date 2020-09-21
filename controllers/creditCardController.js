@@ -61,8 +61,8 @@ exports.deleteCreditCard = async (req, res) => {
 // modificacion
 exports.updateCreditCard = async (req, res) => {
   try {
-    const { email, closeDateSummary, dueDateSummary } = req.body;
-    const creditCard = await CreditCard.findOne({ email });
+    const { email, closeDateSummary, dueDateSummary, number } = req.body;
+    const creditCard = await CreditCard.findOne({ email, number });
     if (!creditCard) {
       return res
         .status(400)
