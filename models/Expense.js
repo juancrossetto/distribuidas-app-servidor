@@ -11,6 +11,11 @@ const ExpenseSchema = mongoose.Schema({
     require: true,
     trim: true,
   },
+  paymentId: {
+    type: Number,
+    require: false,
+    trim: true,
+  },
   expenseType: {
     type: String,
     require: true,

@@ -9,11 +9,20 @@ const InvestmentSchema = mongoose.Schema({
   amount: {
     type: Number,
     trim: true,
-    require: true,
+    require: false,
   },
   type: {
     type: String,
     require: true,
+  },
+  specie: {
+    type: String,
+    require: false,
+    trim: true,
+  },
+  specieQuantity: {
+    type: Number,
+    require: false,
   },
   days: {
     type: Number,

@@ -30,6 +30,12 @@ exports.createIncome = async (req, res) => {
     // crea el nuevo ingreso
     const income = new Income(req.body);
     await income.save();
+
+    // app.put("/bankaccounts/changeBalance/", {
+    //   id: income.id,
+    //   amount: income.amount,
+    // });
+    // changeBalance(income.id, income.amount);
     res.json({ income });
   } catch (error) {
     console.log(error);
