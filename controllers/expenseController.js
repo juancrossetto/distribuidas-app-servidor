@@ -1,16 +1,14 @@
 const Expense = require("../models/Expense");
 const { validationResult } = require("express-validator");
 
-// get egresos 
+// get egresos
 exports.getExpenses = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log(email);
     if (email) {
       expenses = await Expense.find({ email: email }).sort({
         date: -1,
       });
-      console.log(expenses);
       res.json({ expenses });
     } else {
       return res.status(400).json({ msg: "No se ha indicado un email" });
@@ -29,8 +27,6 @@ exports.createExpense = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    // crea el nuevo egreso
-    console.log(req.body);
     const expense = new Expense(req.body);
 
     await expense.save();
@@ -52,7 +48,7 @@ exports.deleteExpense = async (req, res) => {
 
     await Expense.findOneAndRemove({ _id: req.params.id });
     res.json({ msg: "Egreso Eliminado" });
-} catch (error) {
+  } catch (error) {
     console.log(error);
     res.status(500).send("Hubo un error");
   }
@@ -62,42 +58,42 @@ exports.deleteExpense = async (req, res) => {
 exports.getExpensesByPayment = async (req, res) => {
   try {
     const { paymentType, id } = req.body;
-    console.log( paymentType, id);
-    let currentDate = new Date()
+    let currentDate = new Date();
 
-    if ( paymentType ) {
+    if (paymentType) {
       expenses = await Expense.aggregate([
-      {
-        $addFields: {
-          "month" : {$month: '$date'}
-        }
-      },
-      {
-        $match:{ 
-          $and:[
-            {paymentType:paymentType},
-            {paymentId:id},
-            { month: currentDate.getMonth()  + 1},
-          ]  
-        }
-      },
         {
-         $group: {
+          $addFields: {
+            month: { $month: "$date" },
+          },
+        },
+        {
+          $match: {
+            $and: [
+              { paymentType: paymentType },
+              { paymentId: id },
+              { month: currentDate.getMonth() + 1 },
+            ],
+          },
+        },
+        {
+          $group: {
             _id: null,
-            "TotalAmount": {
-               $sum: "$amount"
-            }
-         }
-      }      
-  ] );
-      console.log(expenses);
+            TotalAmount: {
+              $sum: "$amount",
+            },
+          },
+        },
+      ]);
       let totalAmount = null;
-      if(expenses.length > 0){
-        totalAmount = expenses[0].TotalAmount
+      if (expenses.length > 0) {
+        totalAmount = expenses[0].TotalAmount;
       }
       res.json({ totalAmount });
     } else {
-      return res.status(400).json({ msg: "Tiene que indicarse un tipo y un id de tipo" });
+      return res
+        .status(400)
+        .json({ msg: "Tiene que indicarse un tipo y un id de tipo" });
     }
   } catch (error) {
     console.log(error);
@@ -110,34 +106,29 @@ exports.getExpensesByPayment = async (req, res) => {
 exports.getMontlyExpenses = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log( email);
-    let currentDate = new Date()
+    let currentDate = new Date();
 
-    if ( email ) {
+    if (email) {
       expenses = await Expense.aggregate([
-      {
-        $addFields: {
-          "month" : {$month: '$date'}
-        }
-      },
-      {
-        $match:{ 
-          $and:[
-            {email: email},
-            { month: currentDate.getMonth()  + 1},
-          ]
-        }
-      },
         {
-         $group: {
+          $addFields: {
+            month: { $month: "$date" },
+          },
+        },
+        {
+          $match: {
+            $and: [{ email: email }, { month: currentDate.getMonth() + 1 }],
+          },
+        },
+        {
+          $group: {
             _id: "$paymentType",
-            "TotalAmount": {
-               $sum: "$amount"
-            }
-         }
-      }      
-  ] );
-      console.log(expenses);
+            TotalAmount: {
+              $sum: "$amount",
+            },
+          },
+        },
+      ]);
       res.json({ expenses });
     } else {
       return res.status(400).json({ msg: "Tiene que indicarse un email" });
