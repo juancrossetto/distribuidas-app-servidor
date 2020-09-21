@@ -17,4 +17,15 @@ router.post(
 // api/expenses
 router.get("/:email", expenseController.getExpenses);
 
+router.post(
+  "/getbypayment",
+  [
+    check("email", "El email es obligatorio").not().isEmpty(),
+  ],
+  expenseController.getExpensesByPayment
+);
+
+router.post("/monthlyexpenses", expenseController.getMontlyExpenses);
+
+
 module.exports = router;

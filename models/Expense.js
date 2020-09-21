@@ -3,7 +3,7 @@ var id = mongoose.Types.ObjectId();
 
 const ExpenseSchema = mongoose.Schema({
   amount: {
-    type: String,
+    type: Number,
     trim: true,
   },
   paymentType: {
