@@ -1,5 +1,7 @@
 const Expense = require("../models/Expense");
+const creditCardMovement = require("../models/creditCardMovement");
 const { validationResult } = require("express-validator");
+const { addMonthCurrentDate } = require("../utils");
 
 // get egresos
 exports.getExpenses = async (req, res) => {
@@ -28,6 +30,22 @@ exports.createExpense = async (req, res) => {
       return res.status(400).json({ errores: errores.array() });
     }
     const expense = new Expense(req.body);
+
+    if (expense.paymentType === "TRC") {
+      // Crear un movimiento por cada cuota
+      const feeAmount = expense.amount / expense.fees;
+      for (let fee = 1; fee <= expense.fees; fee++) {
+        const movement = new creditCardMovement();
+        movement.numberFee = fee;
+        movement.creditCardNumber = expense.paymentId;
+        movement.amount = feeAmount;
+        movement.dueDate = await addMonthCurrentDate(fee);
+        movement.expense = expense.id;
+        movement.email = expense.email;
+
+        await movement.save();
+      }
+    }
 
     await expense.save();
     res.json({ expense });
