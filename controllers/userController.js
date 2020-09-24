@@ -1,7 +1,14 @@
-const User = require("../models/User");
 const bcryptjs = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
+const Income = require("../models/Income");
+const Expense = require("../models/Expense");
+const Loan = require("../models/Loan");
+const Budget = require("../models/Budget");
+const CreditCard = require("../models/CreditCard");
+const BankAccount = require("../models/BankAccount");
+const Investment = require("../models/Investment");
 
 exports.createUser = async (req, res) => {
   // revisar si hay errores
@@ -118,4 +125,30 @@ exports.deleteUser = async (req, res) => {
     console.log(error);
     res.status(500).send("Hubo un error");
   }
+};
+
+exports.getAllData = async (req, res) => {
+  try {
+    const { email } = req.params;
+    if (email) {
+      var incomes = await Income.find({ email });
+      var expenses = await Expense.find({ email });
+      var loans = await Loan.find({ email });
+      var creditCards = await CreditCard.find({ email });
+      var bankAccounts = await BankAccount.find({ email });
+      var budgets = await Budget.find({ email });
+      var investments = await Investment.find({ email });
+      res.json({
+        incomes,
+        expenses,
+        loans,
+        creditCards,
+        bankAccounts,
+        budgets,
+        investments,
+      });
+    } else {
+      res.status(500).send("Para obtener la información debe indicar un email");
+    }
+  } catch (error) {}
 };

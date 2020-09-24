@@ -4,7 +4,7 @@ const userController = require("../controllers/userController");
 const { check } = require("express-validator");
 const auth = require("../middleware/auth");
 // Create an user
-// api/user
+// api/users
 router.post(
   "/",
   [
@@ -26,5 +26,7 @@ router.get("/:email", userController.getUserByEmail);
 router.put("/:id", auth, userController.updateUser);
 
 router.delete("/:id", auth, userController.deleteUser);
+
+router.get("/getAllData/:email", userController.getAllData);
 
 module.exports = router;

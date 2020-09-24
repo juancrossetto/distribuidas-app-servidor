@@ -1,7 +1,7 @@
 const express = require("express");
 const conectarDB = require("./config/db");
 const cors = require("cors"); //npm i cors
-
+const cron = require("node-cron");
 // crear el servidor
 const app = express();
 
@@ -28,7 +28,13 @@ app.use("/api/investments", require("./routes/investments"));
 app.use("/api/bankaccounts", require("./routes/bankAccounts"));
 app.use("/api/creditCards", require("./routes/creditCards"));
 
+app.use("/api/pushNotifications", require("./routes/pushNotification"));
+
 // arrancar la app
 app.listen(port, "0.0.0.0", () => {
   console.log(`El servidor esta funcionando en el puerto ${port}`);
+});
+
+cron.schedule("* * * * *", () => {
+  console.log("Hello world!");
 });
