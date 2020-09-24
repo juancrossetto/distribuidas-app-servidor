@@ -1,5 +1,5 @@
 const Expense = require("../models/Expense");
-const creditCardMovement = require("../models/creditCardMovement");
+const CreditCardMovement = require("../models/CreditCardMovement");
 const { validationResult } = require("express-validator");
 const { addMonthCurrentDate } = require("../utils");
 
@@ -35,7 +35,7 @@ exports.createExpense = async (req, res) => {
       // Crear un movimiento por cada cuota
       const feeAmount = expense.amount / expense.fees;
       for (let fee = 1; fee <= expense.fees; fee++) {
-        const movement = new creditCardMovement();
+        const movement = new CreditCardMovement();
         movement.numberFee = fee;
         movement.creditCardNumber = expense.paymentId;
         movement.amount = feeAmount;

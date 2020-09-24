@@ -9,7 +9,7 @@ router.post(
   [
     check("email", "El Email es obligatorio.").not().isEmpty(),
     check("cbu", "El CBU es obligatorio").not().isEmpty(),
-    check("balance", "El metodo es obligatorio").isNumeric()
+    check("balance", "El metodo es obligatorio").isNumeric(),
   ],
   bankAccountController.createBankAccount
 );
@@ -17,8 +17,8 @@ router.post(
 // api/bankaccounts
 router.get("/:email", bankAccountController.getBankAccounts);
 
-router.put("/changeBalance", bankAccountController.changeBalance );
+router.put("/changeBalance", bankAccountController.changeBalance);
 
-
+router.post("/getMovements", bankAccountController.getMovements);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const BankAccount = require("../models/BankAccount");
 const { validationResult } = require("express-validator");
-const { baseModelName } = require("../models/BankAccount");
+const BankAccountMovement = require("../models/BankAccountMovement");
 
 // get cuentas
 exports.getBankAccounts = async (req, res) => {
@@ -74,6 +74,14 @@ exports.changeBalance = async (req, res) => {
       new: false,
     });
 
+    const movement = new BankAccountMovement();
+    movement.bankAccount = id;
+    movement.date = new Date(); //getCurrentDate();
+    movement.amount = amount;
+    movement.bankAccountBalance = bankAccount.balance;
+    movement.email = bankAccount.email;
+    await movement.save();
+
     res.json({ bankAccount });
   } catch (error) {
     console.log(error);
@@ -81,4 +89,22 @@ exports.changeBalance = async (req, res) => {
   }
 };
 
-// modificacion de egreso
+exports.getMovements = async (req, res) => {
+  try {
+    const { bankAccount, fromDate, toDate, email } = req.body;
+    // const today = moment().startOf("day");
+    // console.log(today.toDate(), moment(today).endOf("day").toDate());
+    let movements = await BankAccountMovement.find({
+      bankAccount,
+      email,
+      date: {
+        $gte: fromDate,
+        $lte: toDate,
+      },
+    });
+    res.json({ movements });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Hubo un error");
+  }
+};
