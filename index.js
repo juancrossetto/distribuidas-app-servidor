@@ -2,6 +2,10 @@ const express = require("express");
 const conectarDB = require("./config/db");
 const cors = require("cors"); //npm i cors
 const cron = require("node-cron");
+const {
+  getAllTokens,
+  sendPushNotification,
+} = require("./services/pushNotificationService");
 // crear el servidor
 const app = express();
 
@@ -35,6 +39,23 @@ app.listen(port, "0.0.0.0", () => {
   console.log(`El servidor esta funcionando en el puerto ${port}`);
 });
 
-cron.schedule("* * * * *", () => {
-  console.log("Hello world!");
+//* * * * * una vez por minuto
+//0 */6 * * *  una vez cada 6 hs
+cron.schedule("0 */4 * * *", () => {
+  sendPushNotifications();
+  // console.log("Hello world!");
 });
+
+const sendPushNotifications = async () => {
+  const tokens = await getAllTokens();
+  let count = 0;
+  tokens.forEach((token) => {
+    sendPushNotification(
+      token.token,
+      "OrganizApp -Información Vencida!! 📬",
+      "Por favor Renueve la fecha de vencimiento y cierre de tu tarjeta de crédito 💳"
+    );
+    count = count + 1;
+  });
+  console.log(`${count} notificaciones enviadas`);
+};

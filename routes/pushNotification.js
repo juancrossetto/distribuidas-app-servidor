@@ -16,4 +16,6 @@ router.post(
 // api/pushNotifications/getAllTokens
 router.get("/getAllTokens", pushNotificationController.getAllTokens);
 
+router.post("/send", pushNotificationController.sendPushNotification);
+
 module.exports = router;
