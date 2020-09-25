@@ -9,6 +9,10 @@ const PushNotificationSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  name: {
+    type: String,
+    require: true,
+  },
   id: {
     type: mongoose.Schema.Types.ObjectId,
     index: true,

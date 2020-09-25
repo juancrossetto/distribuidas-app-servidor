@@ -93,7 +93,6 @@ exports.getMovements = async (req, res) => {
   try {
     const { bankAccount, fromDate, toDate, email } = req.body;
     // const today = moment().startOf("day");
-    // console.log(today.toDate(), moment(today).endOf("day").toDate());
     let movements = await BankAccountMovement.find({
       bankAccount,
       email,

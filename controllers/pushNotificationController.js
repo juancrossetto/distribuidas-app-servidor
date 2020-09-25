@@ -18,9 +18,7 @@ exports.saveToken = async (req, res) => {
     }
     const { email, token } = req.body;
     let tokenExist = await PushNotification.findOne({ token });
-
     if (tokenExist) {
-      console.log(tokenExist);
       return res.status(400).json({ msg: "El Token ya existe" });
     } else {
       const pushNotification = new PushNotification(req.body);

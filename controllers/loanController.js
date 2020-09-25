@@ -3,12 +3,10 @@ const bcryptjs = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
-
-// get prestamos 
+// get prestamos
 exports.getLoans = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log(email);
     if (email) {
       loans = await Loan.find({ email: email }).sort({
         date: -1,
@@ -26,22 +24,21 @@ exports.getLoans = async (req, res) => {
 };
 
 exports.createLoan = async (req, res) => {
-    try {
-      const errores = validationResult(req);
-      if (!errores.isEmpty()) {
-        return res.status(400).json({ errores: errores.array() });
-      }
-      // crea el nuevo egreso
-      console.log(req.body);
-      const loan = new Loan(req.body);
-  
-      await loan.save();
-      res.json({ loan });
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ msg: "Hubo un error al Crear el Prestamo" });
+  try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
     }
-  };
+    // crea el nuevo egreso
+    const loan = new Loan(req.body);
+
+    await loan.save();
+    res.json({ loan });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ msg: "Hubo un error al Crear el Prestamo" });
+  }
+};
 
 exports.deleteLoan = async (req, res) => {
   try {

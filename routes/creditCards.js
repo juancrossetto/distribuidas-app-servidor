@@ -30,4 +30,10 @@ router.get("/:email", creditCardController.getCreditCards);
 // api/creditCards
 router.put("/", [], creditCardController.updateCreditCard);
 
+router.post(
+  "/payOverdueFees",
+  [check("email", "El Mail es obligatorio.").not().isEmpty()],
+  creditCardController.payOverdueFees
+);
+
 module.exports = router;

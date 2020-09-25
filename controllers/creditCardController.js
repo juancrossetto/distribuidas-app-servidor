@@ -1,14 +1,16 @@
 const CreditCard = require("../models/CreditCard");
+const CreditCardMovement = require("../models/CreditCardMovement");
 const { validationResult } = require("express-validator");
-
+const {
+  getCreditCards,
+  payCreditCardMovement,
+} = require("../services/creditCardService");
 // get credit cards
 exports.getCreditCards = async (req, res) => {
   try {
     const { email } = req.params;
     if (email) {
-      creditCards = await CreditCard.find({ email: email }).sort({
-        date: -1,
-      });
+      const creditCards = await getCreditCards(email);
       res.json({ creditCards });
     } else {
       return res.status(400).json({ msg: "No se ha indicado un email" });
@@ -28,7 +30,6 @@ exports.createCreditCard = async (req, res) => {
       return res.status(400).json({ errores: errores.array() });
     }
     // crea la nueva Tarjeta de Credito
-    console.log(req.body);
     const creditCard = new CreditCard(req.body);
 
     await creditCard.save();
@@ -79,4 +80,48 @@ exports.updateCreditCard = async (req, res) => {
   } catch (error) {
     res.status(500).json({ msg: "Hubo un error" });
   }
+};
+
+exports.payOverdueFees = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (email) {
+      const movementsDues = await CreditCardMovement.find({
+        email,
+        paid: false,
+        dueDate: {
+          $lt: new Date(),
+        },
+      });
+      if (movementsDues) {
+        movementsDues.forEach((movement) => {
+          payCreditCardMove(movement);
+          // updateBankAccountBalance();
+        });
+      }
+    } else {
+      return res.status(400).json({ msg: "No se ha indicado un email" });
+    }
+
+    // if (!creditCard) {
+    //   return res
+    //     .status(400)
+    //     .json({ msg: "La tarjeta no se encuentra registrada" });
+    // } else {
+    //   creditCard.closeDateSummary = closeDateSummary;
+    //   creditCard.dueDateSummary = dueDateSummary;
+
+    //   await CreditCard.findOneAndUpdate({ _id: creditCard._id }, creditCard, {
+    //     new: false,
+    //   });
+    res.json({ msg: "Cuotas pagadas OK" });
+    // }
+  } catch (error) {
+    res.status(500).json({ msg: `Hubo un error ${error}` });
+  }
+};
+
+const payCreditCardMove = async (move) => {
+  await payCreditCardMovement(move);
 };

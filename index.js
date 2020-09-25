@@ -6,6 +6,7 @@ const {
   getAllTokens,
   sendPushNotification,
 } = require("./services/pushNotificationService");
+const { getCreditCards } = require("./services/creditCardService");
 // crear el servidor
 const app = express();
 
@@ -42,20 +43,30 @@ app.listen(port, "0.0.0.0", () => {
 //* * * * * una vez por minuto
 //0 */6 * * *  una vez cada 6 hs
 cron.schedule("0 */4 * * *", () => {
-  sendPushNotifications();
-  // console.log("Hello world!");
+  //Envia Push notifications si detecta tarjetas de credito vencidas
+  getPNTokens();
 });
 
-const sendPushNotifications = async () => {
+const getPNTokens = async () => {
   const tokens = await getAllTokens();
-  let count = 0;
+
+  //recorremos por cada token/email
   tokens.forEach((token) => {
-    sendPushNotification(
-      token.token,
-      "OrganizApp -Información Vencida!! 📬",
-      "Por favor Renueve la fecha de vencimiento y cierre de tu tarjeta de crédito 💳"
-    );
-    count = count + 1;
+    sendPushNotifications(token);
   });
-  console.log(`${count} notificaciones enviadas`);
+};
+
+const sendPushNotifications = async (token) => {
+  const today = new Date();
+  const creditCards = await getCreditCards(token.email);
+  creditCards.forEach((creditCard) => {
+    if (creditCard.dueDateSummary < today) {
+      sendPushNotification(
+        token.token,
+        "OrganizApp -Información Vencidaa!! 📬",
+        `${token.name} por favor Renueve la fecha de vencimiento y cierre de tu tarjeta de crédito 💳`
+      );
+    }
+  });
+  console.log(`Notificacion enviada`);
 };

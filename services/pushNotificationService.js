@@ -28,7 +28,7 @@ exports.sendPushNotification = async (token, title, body) => {
       },
       body: JSON.stringify(message),
     });
-    return resp;
+    return "Notificacion Envíada";
   } catch (error) {
     throw Error(`Hubo un error al enviar la notificación:${error}`);
   }

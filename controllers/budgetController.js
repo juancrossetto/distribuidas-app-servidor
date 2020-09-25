@@ -3,8 +3,7 @@ const bcryptjs = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
-
-// get prestamos 
+// get prestamos
 exports.getBudgets = async (req, res) => {
   try {
     const { email } = req.params;
@@ -26,22 +25,23 @@ exports.getBudgets = async (req, res) => {
 };
 
 exports.createBudget = async (req, res) => {
-    try {
-      const errores = validationResult(req);
-      if (!errores.isEmpty()) {
-        return res.status(400).json({ errores: errores.array() });
-      }
-      // crea el nuevo egreso
-      console.log(req.body);
-      const budget = new Budget(req.body);
-  
-      await budget.save();
-      res.json({ budget });
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ msg: "Hubo un error al Crear el Presupuesto" });
+  try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
     }
-  };
+    // crea el nuevo egreso
+    const budget = new Budget(req.body);
+
+    await budget.save();
+    res.json({ budget });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .json({ msg: "Hubo un error al Crear el Presupuesto" });
+  }
+};
 
 exports.deleteBudget = async (req, res) => {
   try {
@@ -64,32 +64,32 @@ exports.getByType = async (req, res) => {
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
-    };
+    }
     const { email, month, year } = req.body;
     if (email && month && year) {
       budgets = await Budget.aggregate([
         {
-          $addFields: {  
-            "month" : {$month: '$date'},
-            "year": {$year: '$date'}}
+          $addFields: {
+            month: { $month: "$date" },
+            year: { $year: "$date" },
+          },
         },
         {
           $match: {
-          month: month,
-          year: year,
-          email:email
-          }
+            month: month,
+            year: year,
+            email: email,
+          },
         },
         {
           $group: {
-             _id: "$category",
-             "TotalAmount": {
-                $sum: "$amount"
-             }
-          }
-       }   
+            _id: "$category",
+            TotalAmount: {
+              $sum: "$amount",
+            },
+          },
+        },
       ]);
-      console.log(budgets);
       res.json({ budgets });
     } else {
       return res.status(400).json({ msg: "Tiene que indicarse mail y mes" });
