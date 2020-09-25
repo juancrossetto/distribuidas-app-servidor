@@ -16,6 +16,10 @@ const ExpenseSchema = mongoose.Schema({
     require: false,
     trim: true,
   },
+  bankAccountDescription: {
+    type: String,
+    require: false,
+  },
   expenseType: {
     type: String,
     require: true,

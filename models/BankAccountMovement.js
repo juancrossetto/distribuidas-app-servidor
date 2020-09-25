@@ -18,6 +18,10 @@ const BankAccountMovementSchema = mongoose.Schema({
     type: Number,
     require: true,
   },
+  type: {
+    type: String,
+    require: true,
+  },
   email: {
     type: String,
     require: true,

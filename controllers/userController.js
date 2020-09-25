@@ -7,7 +7,9 @@ const Expense = require("../models/Expense");
 const Loan = require("../models/Loan");
 const Budget = require("../models/Budget");
 const CreditCard = require("../models/CreditCard");
+const CreditCardMovement = require("../models/CreditCardMovement");
 const BankAccount = require("../models/BankAccount");
+const BankAccountMovement = require("../models/BankAccountMovement");
 const Investment = require("../models/Investment");
 
 exports.createUser = async (req, res) => {
@@ -137,6 +139,8 @@ exports.getAllData = async (req, res) => {
       var creditCards = await CreditCard.find({ email });
       var bankAccounts = await BankAccount.find({ email });
       var budgets = await Budget.find({ email });
+      var creditCardMovements = await CreditCardMovement.find({ email });
+      var bankAccountMovements = await BankAccountMovement.find({ email });
       var investments = await Investment.find({ email });
       res.json({
         incomes,
@@ -146,6 +150,8 @@ exports.getAllData = async (req, res) => {
         bankAccounts,
         budgets,
         investments,
+        creditCardMovements,
+        bankAccountMovements,
       });
     } else {
       res.status(500).send("Para obtener la información debe indicar un email");

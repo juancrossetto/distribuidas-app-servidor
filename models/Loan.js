@@ -18,9 +18,17 @@ const LoanSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  fees: {
+    type: Number,
+    require: true,
+  },
   bankAccount: {
     type: String,
     require: true,
+  },
+  bankAccountDescription: {
+    type: String,
+    require: false,
   },
   date: {
     type: Date,

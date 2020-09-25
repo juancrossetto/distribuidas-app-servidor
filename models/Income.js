@@ -18,6 +18,10 @@ const IncomeSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  bankAccountDescription: {
+    type: String,
+    require: false,
+  },
   text: {
     type: String,
     trim: true,

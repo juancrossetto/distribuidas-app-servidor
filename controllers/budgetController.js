@@ -7,12 +7,10 @@ const jwt = require("jsonwebtoken");
 exports.getBudgets = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log(email);
     if (email) {
       budgets = await Budget.find({ email: email }).sort({
         date: -1,
       });
-      console.log(budgets);
       res.json({ budgets });
     } else {
       return res.status(400).json({ msg: "No se ha indicado un email" });

@@ -63,7 +63,7 @@ const sendPushNotifications = async (token) => {
     if (creditCard.dueDateSummary < today) {
       sendPushNotification(
         token.token,
-        "OrganizApp -Información Vencidaa!! 📬",
+        "My Budget App - Información Vencidaa!! 📬",
         `${token.name} por favor Renueve la fecha de vencimiento y cierre de tu tarjeta de crédito 💳`
       );
     }

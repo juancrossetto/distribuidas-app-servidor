@@ -57,7 +57,7 @@ exports.deleteBankAccount = async (req, res) => {
 
 exports.changeBalance = async (req, res) => {
   try {
-    const { id, amount } = req.body;
+    const { id, amount, type } = req.body;
     const bankAccount = await BankAccount.findOne({ id: id });
     if (!bankAccount) {
       return res.status(404).json({ msg: "No existe la cuenta" });
@@ -78,6 +78,7 @@ exports.changeBalance = async (req, res) => {
     movement.bankAccount = id;
     movement.date = new Date(); //getCurrentDate();
     movement.amount = amount;
+    movement.type = type;
     movement.bankAccountBalance = bankAccount.balance;
     movement.email = bankAccount.email;
     await movement.save();
