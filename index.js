@@ -49,7 +49,7 @@ app.listen(port, "0.0.0.0", () => {
 
 //* * * * * una vez por minuto
 //0 */6 * * *  una vez cada 6 hs
-cron.schedule("* * * * *", () => {
+cron.schedule("0 */6 * * *", () => {
   //Envia Push notifications si detecta tarjetas de credito vencidas
   sendPNCreditCardDueDates();
 
