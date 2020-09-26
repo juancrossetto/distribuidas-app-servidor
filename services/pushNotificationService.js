@@ -9,6 +9,14 @@ exports.getAllTokens = async () => {
   }
 };
 
+exports.getTokenByEmail = async (email) => {
+  try {
+    return await PushNotification.findOne({ email });
+  } catch (error) {
+    throw Error("Hubo un error al obtener El Token PN");
+  }
+};
+
 exports.sendPushNotification = async (token, title, body) => {
   try {
     //   return await PushNotification.find();
@@ -19,7 +27,7 @@ exports.sendPushNotification = async (token, title, body) => {
       body: body,
       data: { data: "go data" },
     };
-    const resp = await fetch("https://exp.host/--/api/v2/push/send", {
+    await fetch("https://exp.host/--/api/v2/push/send", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -30,6 +38,6 @@ exports.sendPushNotification = async (token, title, body) => {
     });
     return "Notificacion Envíada";
   } catch (error) {
-    throw Error(`Hubo un error al enviar la notificación:${error}`);
+    throw `Hubo un error al enviar la notificación:${error}`;
   }
 };

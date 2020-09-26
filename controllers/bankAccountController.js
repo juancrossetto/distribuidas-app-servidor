@@ -1,7 +1,7 @@
 const BankAccount = require("../models/BankAccount");
 const { validationResult } = require("express-validator");
 const BankAccountMovement = require("../models/BankAccountMovement");
-
+const { changeBalance } = require("../services/bankAccountService");
 // get cuentas
 exports.getBankAccounts = async (req, res) => {
   try {
@@ -58,32 +58,10 @@ exports.deleteBankAccount = async (req, res) => {
 exports.changeBalance = async (req, res) => {
   try {
     const { id, amount, type } = req.body;
-    const bankAccount = await BankAccount.findOne({ id: id });
-    if (!bankAccount) {
-      return res.status(404).json({ msg: "No existe la cuenta" });
-    }
 
-    let newBalance = bankAccount.balance + amount;
-    // El gasto no puede ser mayor al dinero que tiene la cuenta
-    if (newBalance < 0) {
-      return res.status(400).json({ msg: "Monto insuficiente" });
-    }
-
-    bankAccount.balance = newBalance;
-    await BankAccount.findOneAndUpdate({ id: bankAccount.id }, bankAccount, {
-      new: false,
-    });
-
-    const movement = new BankAccountMovement();
-    movement.bankAccount = id;
-    movement.date = new Date(); //getCurrentDate();
-    movement.amount = amount;
-    movement.type = type;
-    movement.bankAccountBalance = bankAccount.balance;
-    movement.email = bankAccount.email;
-    await movement.save();
-
-    res.json({ bankAccount });
+    const response = await changeBalance(id, amount, type);
+    console.log(response);
+    res.json({ response });
   } catch (error) {
     console.log(error);
     res.status(500).send("Hubo un error");
