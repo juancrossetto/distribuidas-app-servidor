@@ -87,7 +87,7 @@ exports.getByType = async (req, res) => {
         },
         {
           $group: {
-            _id: "$category",
+            _id: "$type",
             TotalAmount: {
               $sum: "$amount",
             },
