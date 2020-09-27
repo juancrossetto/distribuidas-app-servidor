@@ -26,7 +26,6 @@ exports.updateLoanMovement = async (movement) => {
   }
 };
 
-//TODO Separar entre tomado o dado
 exports.getMonthSumLoans = async (email,month) => {
   try {
     return await Loan.aggregate([
@@ -45,17 +44,11 @@ exports.getMonthSumLoans = async (email,month) => {
           },
         {
             $group: {
-                _id: '',
+                _id: '$type',
                 amount: { $sum: '$amount' }
             }
         },
-        {
-            $project: {
-                _id: 0,
-                amount: '$amount'
-            }
-        }
-    ])  
+    ]);
   } catch (error) {
     throw Error("Hubo un error al obtener los prestamos");
   }
