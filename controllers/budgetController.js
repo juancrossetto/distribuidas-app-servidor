@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const { getMonthSumExpenses } = require("../services/expenseService");
 const { getMonthSumIncomes } = require("../services/incomeService");
 const { getMonthSumInvestment } = require("../services/investmentService");
+const { getMonthSumLoans } = require("../services/loanService");
+
 
 // get prestamos
 exports.getBudgets = async (req, res) => {
@@ -97,7 +99,7 @@ exports.getByType = async (req, res) => {
         expenses: await getMonthSumExpenses(email, currentDate.getMonth() + 1),
         incomes: await getMonthSumIncomes(email, currentDate.getMonth() + 1),
         investments: await getMonthSumInvestment(email, currentDate.getMonth() + 1),
-        loans: await getMonthSumIncomes(email, currentDate.getMonth() + 1),
+        loans: await getMonthSumLoans(email, currentDate.getMonth() + 1),
         budgets:budgets,
       }
 

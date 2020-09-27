@@ -27,7 +27,7 @@ exports.updateLoanMovement = async (movement) => {
 };
 
 //TODO Separar entre tomado o dado
-exports.getMonthSumIncomes = async (email,month) => {
+exports.getMonthSumLoans = async (email,month) => {
   try {
     return await Loan.aggregate([
         {
