@@ -68,9 +68,8 @@ exports.getByType = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    const { email } = req.body;
-    if (email) {
-      let currentDate = new Date();
+    const { email, month, year } = req.body;
+    if (email && month && year) {
       budgets = await Budget.aggregate([
         {
           $addFields: {
@@ -80,9 +79,11 @@ exports.getByType = async (req, res) => {
         },
         {
           $match: {
-            month: currentDate.getMonth() + 1,
-            year: currentDate.getFullYear(),
-            email: email,
+            $and: [
+              { email: email },
+              { month: month },
+              { year: year }
+            ],
           },
         },
         {
@@ -96,16 +97,16 @@ exports.getByType = async (req, res) => {
       ]);
 
       let response = {
-        expenses: await getMonthSumExpenses(email, currentDate.getMonth() + 1),
-        incomes: await getMonthSumIncomes(email, currentDate.getMonth() + 1),
-        investments: await getMonthSumInvestment(email, currentDate.getMonth() + 1),
-        loans: await getMonthSumLoans(email, currentDate.getMonth() + 1),
+        expenses: await getMonthSumExpenses(email, month, year),
+        incomes: await getMonthSumIncomes(email, month, year),
+        investments: await getMonthSumInvestment(email, month, year),
+        loans: await getMonthSumLoans(email, month, year),
         budgets:budgets,
       }
 
       res.json({ response });
     } else {
-      return res.status(400).json({ msg: "Tiene que indicarse mail y mes" });
+      return res.status(400).json({ msg: "Tiene que indicarse mail, mes y año" });
     }
   } catch (error) {
     console.log(error);

@@ -26,22 +26,24 @@ exports.updateLoanMovement = async (movement) => {
   }
 };
 
-exports.getMonthSumLoans = async (email,month) => {
+exports.getMonthSumLoans = async (email, month, year) => {
   try {
     return await Loan.aggregate([
         {
-            $addFields: {
-              month: { $month: "$date" },
-            },
+          $addFields: {
+            month: { $month: "$date" },
+            year: { $year: "$date" },
           },
-          {
-            $match: {
-              $and: [
-                { email: email },
-                { month: month },
-              ],
-            },
+        },
+        {
+          $match: {
+            $and: [
+              { email: email },
+              { month: month },
+              { year: year },
+            ],
           },
+        },
         {
             $group: {
                 _id: '$type',

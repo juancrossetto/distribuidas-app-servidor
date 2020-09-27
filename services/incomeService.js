@@ -1,21 +1,23 @@
 const Income = require("../models/Income");
 
-exports.getMonthSumIncomes = async (email,month) => {
+exports.getMonthSumIncomes = async (email, month, year) => {
   try {
     return await Income.aggregate([
         {
-            $addFields: {
-              month: { $month: "$date" },
-            },
+          $addFields: {
+            month: { $month: "$date" },
+            year: { $year: "$date" },
           },
-          {
-            $match: {
-              $and: [
-                { email: email },
-                { month: month },
-              ],
-            },
+        },
+        {
+          $match: {
+            $and: [
+              { email: email },
+              { month: month },
+              { year: year },
+            ],
           },
+        },
         {
             $group: {
                 _id: '',
