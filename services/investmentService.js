@@ -17,3 +17,37 @@ exports.updateInvestment = async (investment) => {
     throw Error("Hubo un error al actualizar la inversión");
   }
 };
+
+exports.getMonthSumInvestment = async (email,month) => {
+  try {
+    return await Investment.aggregate([
+        {
+            $addFields: {
+              month: { $month: "$date" },
+            },
+          },
+          {
+            $match: {
+              $and: [
+                { email: email },
+                { month: month },
+              ],
+            },
+          },
+        {
+            $group: {
+                _id: '',
+                amount: { $sum: '$amount' }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                amount: '$amount'
+            }
+        }
+    ])  
+  } catch (error) {
+    throw Error("Hubo un error al obtener las inversiones");
+  }
+};

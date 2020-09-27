@@ -18,11 +18,9 @@ router.post(
 // api/budgetsbudgets
 router.get("/:email", budgetController.getBudgets);
 
-router.post("/getbytype",
+router.post("/getvariation",
 [
   check("email", "El mail es obligatorio").not().isEmpty(),
-  check("month", "El mes debe ser Entero.").isNumeric().not(),
-  check("year", "El año debe ser Entero.").isNumeric(),
 
 ],
 budgetController.getByType);

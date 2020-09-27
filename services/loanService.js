@@ -25,3 +25,38 @@ exports.updateLoanMovement = async (movement) => {
     throw Error("Error al actualizar los movimientos del prestamo");
   }
 };
+
+//TODO Separar entre tomado o dado
+exports.getMonthSumIncomes = async (email,month) => {
+  try {
+    return await Loan.aggregate([
+        {
+            $addFields: {
+              month: { $month: "$date" },
+            },
+          },
+          {
+            $match: {
+              $and: [
+                { email: email },
+                { month: month },
+              ],
+            },
+          },
+        {
+            $group: {
+                _id: '',
+                amount: { $sum: '$amount' }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                amount: '$amount'
+            }
+        }
+    ])  
+  } catch (error) {
+    throw Error("Hubo un error al obtener los prestamos");
+  }
+};

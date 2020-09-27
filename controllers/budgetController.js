@@ -2,6 +2,9 @@ const Budget = require("../models/Budget");
 const bcryptjs = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const { getMonthSumExpenses } = require("../services/expenseService");
+const { getMonthSumIncomes } = require("../services/incomeService");
+const { getMonthSumInvestment } = require("../services/investmentService");
 
 // get prestamos
 exports.getBudgets = async (req, res) => {
@@ -63,8 +66,9 @@ exports.getByType = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    const { email, month, year } = req.body;
-    if (email && month && year) {
+    const { email } = req.body;
+    if (email) {
+      let currentDate = new Date();
       budgets = await Budget.aggregate([
         {
           $addFields: {
@@ -74,8 +78,8 @@ exports.getByType = async (req, res) => {
         },
         {
           $match: {
-            month: month,
-            year: year,
+            month: currentDate.getMonth() + 1,
+            year: currentDate.getFullYear(),
             email: email,
           },
         },
@@ -88,7 +92,16 @@ exports.getByType = async (req, res) => {
           },
         },
       ]);
-      res.json({ budgets });
+
+      let response = {
+        expenses: await getMonthSumExpenses(email, currentDate.getMonth() + 1),
+        incomes: await getMonthSumIncomes(email, currentDate.getMonth() + 1),
+        investments: await getMonthSumInvestment(email, currentDate.getMonth() + 1),
+        loans: await getMonthSumIncomes(email, currentDate.getMonth() + 1),
+        budgets:budgets,
+      }
+
+      res.json({ response });
     } else {
       return res.status(400).json({ msg: "Tiene que indicarse mail y mes" });
     }
