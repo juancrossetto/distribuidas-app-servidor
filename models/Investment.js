@@ -28,6 +28,11 @@ const InvestmentSchema = mongoose.Schema({
     type: Number,
     require: true,
   },
+  deposited: {
+    type: Boolean,
+    require: false,
+    default: false,
+  },
   interestRate: {
     type: Number,
     require: true,
@@ -36,7 +41,11 @@ const InvestmentSchema = mongoose.Schema({
     type: String,
     require: false,
   },
-  autmomaticRenovation: {
+  bankAccountDescription: {
+    type: String,
+    require: false,
+  },
+  automaticRenovation: {
     type: Boolean,
     require: false,
   },

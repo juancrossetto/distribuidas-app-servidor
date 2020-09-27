@@ -27,7 +27,6 @@ exports.createInvestments = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-
     const investment = new Investment(req.body);
     await investment.save();
     res.json({ investment });

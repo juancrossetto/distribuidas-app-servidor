@@ -13,6 +13,12 @@ const {
   updateLoanMovement,
 } = require("./services/loanService");
 const { changeBalance } = require("./services/bankAccountService");
+const {
+  getTimeDeposits,
+  updateInvestment,
+} = require("./services/investmentService");
+const moment = require("moment");
+const { addDaysCurrentDateWithoutFormat } = require("./utils");
 
 // crear el servidor
 const app = express();
@@ -51,13 +57,16 @@ app.listen(port, "0.0.0.0", () => {
 //0 */6 * * *  una vez cada 6 hs
 cron.schedule("0 */6 * * *", () => {
   //Envia Push notifications si detecta tarjetas de credito vencidas
-  sendPNCreditCardDueDates();
+  CreditCardDueDatesSchedule();
 
   // Enviar Push Notification avisando que se pagaron las cuotas vencidas.
-  payDueBudgetFees();
+  BudgetFeesSchedule();
+
+  // Enviar Push Notification avisando que finalizo el plazo fijo o se acerca el vencimiento
+  TimeDepositsSchedule();
 });
 
-const sendPNCreditCardDueDates = async () => {
+const CreditCardDueDatesSchedule = async () => {
   try {
     const tokens = await getAllTokens();
     const today = new Date();
@@ -78,13 +87,13 @@ const sendPNCreditCardDueDates = async () => {
     }
   } catch (error) {
     console.log(
-      "Error al enviar Push Notification de Fecha de Vencimiento de Tarjeta",
+      "Error en Proceso Batch de Renovacion de Fecha de Vencimiento de Tarjeta",
       error
     );
   }
 };
 
-const payDueBudgetFees = async () => {
+const BudgetFeesSchedule = async () => {
   try {
     const movements = await getAllDueLoansMovements();
 
@@ -104,9 +113,56 @@ const payDueBudgetFees = async () => {
       console.log(response, "Cuota Pagada");
     }
   } catch (error) {
-    console.log(
-      "Error al enviar Push Notification de Pago de Cuotas Vencidas",
-      error
-    );
+    console.log("Error en Proceso Batch de Pago de Cuotas Vencidas", error);
+  }
+};
+
+const TimeDepositsSchedule = async () => {
+  const timeDeposits = await getTimeDeposits();
+
+  for (const timeDeposit of timeDeposits) {
+    if (timeDeposit.dueDate <= new Date()) {
+      if (!timeDeposit.deposited || timeDeposit.automaticRenovation) {
+        //depositar plata en cuenta
+        const profit = (
+          timeDeposit.amount *
+          ((timeDeposit.interestRate / 100) * (timeDeposit.days / 365))
+        ).toFixed(3);
+        const total = parseFloat(profit) + parseFloat(timeDeposit.amount);
+        console.log(total.toFixed(2));
+        await changeBalance(
+          timeDeposit.bankAccount,
+          total.toFixed(2),
+          "Plazo Fijo Acreditación"
+        );
+        console.log(profit, timeDeposit.amount);
+        const token = await getTokenByEmail(timeDeposit.email);
+        const resp = await sendPushNotification(
+          token.token,
+          "My Budget App - 💰 Plazo Fijo Acreditado 💰",
+          `${token.name} Se ha acreditado un plazo fijo en su Cuenta Bancaria 🏦`
+        );
+        console.log(resp, "Plazo fijo depositado");
+      }
+
+      if (timeDeposit.automaticRenovation) {
+        //actualizar la fecha de vencimiento
+        timeDeposit.dueDate = await addDaysCurrentDateWithoutFormat(
+          timeDeposit.days
+        );
+        timeDeposit.deposited = true;
+        await updateInvestment(timeDeposit);
+        //debitar monto de PF por la renovación
+        await changeBalance(
+          timeDeposit.bankAccount,
+          timeDeposit.amount * -1,
+          "Plazo Fijo Renovación"
+        );
+      }
+    }
+  }
+  try {
+  } catch (error) {
+    console.log("Error en proceso Batch de Plazos Fijos", error);
   }
 };

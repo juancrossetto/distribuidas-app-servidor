@@ -9,6 +9,10 @@ exports.addMonthCurrentDateWithoutFormat = async (months) => {
   return moment().add(months, "months").format();
 };
 
+exports.addDaysCurrentDateWithoutFormat = async (days) => {
+  return moment().add(days, "days").toDate();
+};
+
 exports.getCurrentDate = () => {
   return moment().format("DD-MM-YYYY");
 };
