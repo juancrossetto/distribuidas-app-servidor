@@ -53,3 +53,26 @@ exports.getMonthSumInvestment = async (email, month, year) => {
     throw Error("Hubo un error al obtener las inversiones");
   }
 };
+
+
+exports.getWeeklyInvestments = async (email, from_date, to_date) => {
+  try {
+    return await Investment.find(
+      {
+        email:email,
+
+        dueDate: { 
+          $gte: from_date,
+          $lt:  to_date,
+        }
+      },
+      {
+        _id:1,
+        amount:1,
+        dueDate:1
+      }
+    );
+  } catch (error) {
+    throw Error("Hubo un error al obtener las inversiones");
+  }
+};
