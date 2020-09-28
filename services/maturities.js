@@ -1,6 +1,8 @@
 const moment = require("moment");
 
-const { getWeeklyInvestments } = require("../services/investmentService")
+const { getWeeklyInvestments } = require("../services/investmentService");
+const { getWeeklyCards } = require("../services/creditCardService");
+
 
 exports.getWeeklyMaturities = async (req, res) => {
   try {
@@ -12,6 +14,7 @@ exports.getWeeklyMaturities = async (req, res) => {
     let to_date = today.endOf('week').format('yyyy-MM-DD');
     let maturities = {
       investments: await getWeeklyInvestments(email, from_date, to_date),
+      creditCards: await getWeeklyCards(email, from_date, to_date),
     };
     return await res.json(maturities);
   } catch (error) {
