@@ -79,6 +79,8 @@ exports.getMovements = async (req, res) => {
         $gte: fromDate,
         $lte: toDate,
       },
+    }).sort({
+      date: -1,
     });
     res.json({ movements });
   } catch (error) {
