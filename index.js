@@ -45,6 +45,7 @@ app.use("/api/budgets", require("./routes/budgets"));
 app.use("/api/investments", require("./routes/investments"));
 app.use("/api/bankaccounts", require("./routes/bankAccounts"));
 app.use("/api/creditCards", require("./routes/creditCards"));
+app.use("/api/weeklymaturities", require("./routes/maturities"))
 
 app.use("/api/pushNotifications", require("./routes/pushNotification"));
 
