@@ -55,3 +55,24 @@ exports.getMonthSumLoans = async (email, month, year) => {
     throw Error("Hubo un error al obtener los prestamos");
   }
 };
+
+exports.getWeeklyLoans = async (email, from_date, to_date) => {
+  try {
+    return await LoanMovement.find(
+      {
+        email:email,
+        dueDate: {
+          $gte: from_date,
+          $lt:  to_date,
+        },
+      },
+      {
+        _id:1,
+        loan:1,
+        dueDate:1,
+      }
+    );
+  } catch (error) {
+    throw Error("Hubo un error al obtener los prestamos");
+  }
+};
