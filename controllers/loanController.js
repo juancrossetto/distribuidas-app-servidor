@@ -120,3 +120,19 @@ exports.createLoanMovement = async (req, res) => {
     });
   }
 };
+
+exports.getAllMovements = async (req, res) => {
+  try {
+    const { email } = req.params;
+    console.log(email);
+    let movements = await LoanMovement.find({
+      email,
+    }).sort({
+      date: -1,
+    });
+    res.json({ movements });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Hubo un error");
+  }
+};
