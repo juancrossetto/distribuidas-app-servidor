@@ -11,7 +11,7 @@ const CreditCardMovementSchema = mongoose.Schema({
     require: true,
   },
   dueDate: {
-    type: String,
+    type: Date,
     require: true,
   },
   amount: {
@@ -32,10 +32,11 @@ const CreditCardMovementSchema = mongoose.Schema({
     default: false,
   },
   id: {
-    type: mongoose.Schema.Types.ObjectId,
-    index: true,
-    required: true,
-    auto: true,
+    type: Number,
+    // type: mongoose.Schema.Types.ObjectId,
+    // index: true,
+    // required: true,
+    // auto: true,
   },
 });
 

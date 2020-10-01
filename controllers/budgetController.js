@@ -7,7 +7,6 @@ const { getMonthSumIncomes } = require("../services/incomeService");
 const { getMonthSumInvestment } = require("../services/investmentService");
 const { getMonthSumLoans } = require("../services/loanService");
 
-
 // get prestamos
 exports.getBudgets = async (req, res) => {
   try {
@@ -33,10 +32,19 @@ exports.createBudget = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    // crea el nuevo egreso
-    const budget = new Budget(req.body);
+    const { email, id } = req.body;
+    const budget = await Budget.findOne({ email, id });
+    if (budget) {
+      // ya existe, actualiza
+      await Budget.findOneAndUpdate({ _id: budget._id }, budget, {
+        new: false,
+      });
+    } else {
+      // no existe, lo crea
+      const budget = new Budget(req.body);
+      await budget.save();
+    }
 
-    await budget.save();
     res.json({ budget });
   } catch (error) {
     console.log(error);
@@ -79,11 +87,7 @@ exports.getByType = async (req, res) => {
         },
         {
           $match: {
-            $and: [
-              { email: email },
-              { month: month },
-              { year: year }
-            ],
+            $and: [{ email: email }, { month: month }, { year: year }],
           },
         },
         {
@@ -101,12 +105,14 @@ exports.getByType = async (req, res) => {
         incomes: await getMonthSumIncomes(email, month, year),
         investments: await getMonthSumInvestment(email, month, year),
         loans: await getMonthSumLoans(email, month, year),
-        budgets:budgets,
-      }
+        budgets: budgets,
+      };
 
       res.json({ response });
     } else {
-      return res.status(400).json({ msg: "Tiene que indicarse mail, mes y año" });
+      return res
+        .status(400)
+        .json({ msg: "Tiene que indicarse mail, mes y año" });
     }
   } catch (error) {
     console.log(error);

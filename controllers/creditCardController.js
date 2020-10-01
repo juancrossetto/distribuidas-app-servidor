@@ -29,10 +29,23 @@ exports.createCreditCard = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    // crea la nueva Tarjeta de Credito
-    const creditCard = new CreditCard(req.body);
 
-    await creditCard.save();
+    const { email, id, dueDateSummary, closeDateSummary } = req.body;
+    const creditCard = await CreditCard.findOne({ email, id });
+    if (creditCard) {
+      creditCard.closeDateSummary = closeDateSummary;
+      creditCard.dueDateSummary = dueDateSummary;
+      // ya existe, actualiza
+      await CreditCard.findOneAndUpdate({ _id: creditCard._id }, creditCard, {
+        new: false,
+      });
+    } else {
+      // crea la nueva Tarjeta de Credito
+      const creditCard = new CreditCard(req.body);
+
+      await creditCard.save();
+    }
+
     res.json({ creditCard });
   } catch (error) {
     console.log(error);
@@ -124,4 +137,55 @@ exports.payOverdueFees = async (req, res) => {
 
 const payCreditCardMove = async (move) => {
   await payCreditCardMovement(move);
+};
+
+exports.getAllMovements = async (req, res) => {
+  try {
+    const { email } = req.params;
+    let movements = await CreditCardMovement.find({
+      email,
+    }).sort({
+      date: -1,
+    });
+    res.json({ movements });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Hubo un error");
+  }
+};
+
+// alta de movimiento de tarjeta de crédito (cuotas)
+exports.createCreditCardMovement = async (req, res) => {
+  try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
+    }
+    const { email, id } = req.body;
+    const creditCardMovement = await CreditCardMovement.findOne({
+      email,
+      id,
+    });
+    if (creditCardMovement) {
+      // ya existe, actualiza
+      await CreditCardMovement.findOneAndUpdate(
+        { _id: creditCardMovement._id },
+        creditCardMovement,
+        {
+          new: false,
+        }
+      );
+    } else {
+      // no existe, lo crea
+      const creditCardMovement = new CreditCardMovement(req.body);
+      await creditCardMovement.save();
+    }
+
+    res.json({ creditCardMovement });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      msg: "Hubo un error al Crear un Movimiento de la Tarjeta de Credito",
+    });
+  }
 };

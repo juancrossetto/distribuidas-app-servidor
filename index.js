@@ -45,7 +45,7 @@ app.use("/api/budgets", require("./routes/budgets"));
 app.use("/api/investments", require("./routes/investments"));
 app.use("/api/bankaccounts", require("./routes/bankAccounts"));
 app.use("/api/creditCards", require("./routes/creditCards"));
-app.use("/api/weeklymaturities", require("./routes/maturities"))
+app.use("/api/weeklymaturities", require("./routes/maturities"));
 
 app.use("/api/pushNotifications", require("./routes/pushNotification"));
 
@@ -123,14 +123,16 @@ const TimeDepositsSchedule = async () => {
 
   for (const timeDeposit of timeDeposits) {
     if (timeDeposit.dueDate <= new Date()) {
-      if (!timeDeposit.deposited || timeDeposit.automaticRenovation) {
+      if (
+        !timeDeposit.deposited ||
+        timeDeposit.automaticRenovation === "true"
+      ) {
         //depositar plata en cuenta
         const profit = (
           timeDeposit.amount *
           ((timeDeposit.interestRate / 100) * (timeDeposit.days / 365))
         ).toFixed(3);
         const total = parseFloat(profit) + parseFloat(timeDeposit.amount);
-        console.log(total.toFixed(2));
         await changeBalance(
           timeDeposit.bankAccount,
           total.toFixed(2),
@@ -146,7 +148,7 @@ const TimeDepositsSchedule = async () => {
         console.log(resp, "Plazo fijo depositado");
       }
 
-      if (timeDeposit.automaticRenovation) {
+      if (timeDeposit.automaticRenovation === "true") {
         //actualizar la fecha de vencimiento
         timeDeposit.dueDate = await addDaysCurrentDateWithoutFormat(
           timeDeposit.days

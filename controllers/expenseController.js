@@ -29,25 +29,37 @@ exports.createExpense = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    const expense = new Expense(req.body);
 
-    if (expense.paymentType === "TRC") {
-      // Crear un movimiento por cada cuota
-      const feeAmount = expense.amount / expense.fees;
-      for (let fee = 1; fee <= expense.fees; fee++) {
-        const movement = new CreditCardMovement();
-        movement.numberFee = fee;
-        movement.creditCardNumber = expense.paymentId;
-        movement.amount = feeAmount;
-        movement.dueDate = await addMonthCurrentDate(fee);
-        movement.expense = expense.id;
-        movement.email = expense.email;
+    const { email, id } = req.body;
+    const expense = await Expense.findOne({ email, id });
+    if (expense) {
+      // ya existe, actualiza
+      await Expense.findOneAndUpdate({ _id: expense._id }, expense, {
+        new: false,
+      });
+    } else {
+      // no existe, lo crea
+      const expense = new Expense(req.body);
 
-        await movement.save();
-      }
+      //SE PASO LOGICA AL FRONT
+      // if (expense.paymentType === "TRC") {
+      //   // Crear un movimiento por cada cuota
+      //   const feeAmount = expense.amount / expense.fees;
+      //   for (let fee = 1; fee <= expense.fees; fee++) {
+      //     const movement = new CreditCardMovement();
+      //     movement.numberFee = fee;
+      //     movement.creditCardNumber = expense.paymentId;
+      //     movement.amount = feeAmount;
+      //     movement.dueDate = await addMonthCurrentDate(fee);
+      //     movement.expense = expense.id;
+      //     movement.email = expense.email;
+
+      //     await movement.save();
+      //   }
+      // }
+      await expense.save();
     }
 
-    await expense.save();
     res.json({ expense });
   } catch (error) {
     console.log(error);

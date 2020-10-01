@@ -17,6 +17,6 @@ router.post(
 
 // api/loans
 router.get("/:email", loanController.getLoans);
-
+router.post("/movement/", loanController.createLoanMovement);
 
 module.exports = router;

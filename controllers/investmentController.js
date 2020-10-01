@@ -27,8 +27,19 @@ exports.createInvestments = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    const investment = new Investment(req.body);
-    await investment.save();
+    const { email, id } = req.body;
+    const investment = await Investment.findOne({ email, id });
+    if (investment) {
+      // ya existe, actualiza
+      await Investment.findOneAndUpdate({ _id: investment._id }, investment, {
+        new: false,
+      });
+    } else {
+      // no existe, lo crea
+      const investment = new Investment(req.body);
+      await investment.save();
+    }
+
     res.json({ investment });
   } catch (error) {
     console.log(error);

@@ -14,11 +14,15 @@ router.post(
   bankAccountController.createBankAccount
 );
 
+router.post("/movement", [], bankAccountController.createBankAccountMovement);
+
 // api/bankaccounts
 router.get("/:email", bankAccountController.getBankAccounts);
 
 router.put("/changeBalance", bankAccountController.changeBalance);
 
 router.post("/getMovements", bankAccountController.getMovements);
+
+router.get("/getMovements/:email", bankAccountController.getAllMovements);
 
 module.exports = router;

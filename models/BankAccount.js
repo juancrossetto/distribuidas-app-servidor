@@ -31,10 +31,11 @@ const ExpenseSchema = mongoose.Schema({
     require: true,
   },
   id: {
-    type: mongoose.Schema.Types.ObjectId,
-    index: true,
-    required: true,
-    auto: true,
+    type: Number,
+    // type: mongoose.Schema.Types.ObjectId,
+    // index: true,
+    // required: true,
+    // auto: true,
   },
 });
 

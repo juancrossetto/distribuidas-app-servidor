@@ -36,4 +36,7 @@ router.post(
   creditCardController.payOverdueFees
 );
 
+router.get("/getMovements/:email", creditCardController.getAllMovements);
+router.post("/movement/", creditCardController.createCreditCardMovement);
+
 module.exports = router;

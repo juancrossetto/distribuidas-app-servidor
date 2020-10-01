@@ -28,17 +28,70 @@ exports.createBankAccount = async (req, res) => {
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    const bankAccount = new BankAccount(req.body);
 
-    await bankAccount.save();
+    const { email, id } = req.body;
+    const bankAccount = await BankAccount.findOne({ email, id });
+    if (bankAccount) {
+      // ya existe, actualiza
+      await BankAccount.findOneAndUpdate(
+        { _id: bankAccount._id },
+        bankAccount,
+        {
+          new: false,
+        }
+      );
+    } else {
+      // no existe, lo crea
+      const bankAccount = new BankAccount(req.body);
+      await bankAccount.save();
+    }
+
     res.json({ bankAccount });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ msg: "Hubo un error al Crear la cuenta" });
+    return res
+      .status(400)
+      .json({ msg: "Hubo un error al Crear la cuenta bancaria" });
   }
 };
 
-// baja de egreso
+// alta de movimiento de cuenta bancaria
+exports.createBankAccountMovement = async (req, res) => {
+  try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
+    }
+    const { email, id } = req.body;
+    const bankAccountMovement = await BankAccountMovement.findOne({
+      email,
+      id,
+    });
+    if (bankAccountMovement) {
+      // ya existe, actualiza
+      await BankAccountMovement.findOneAndUpdate(
+        { _id: bankAccountMovement._id },
+        bankAccountMovement,
+        {
+          new: false,
+        }
+      );
+    } else {
+      // no existe, lo crea
+      const bankAccountMovement = new BankAccountMovement(req.body);
+      await bankAccountMovement.save();
+    }
+
+    res.json({ bankAccountMovement });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      msg: "Hubo un error al Crear lun Movimiento de la cuenta bancaria",
+    });
+  }
+};
+
+// baja de cuenta bancaria
 exports.deleteBankAccount = async (req, res) => {
   try {
     let bankAccount = await BankAccount.findById(req.params.id);
@@ -60,7 +113,7 @@ exports.changeBalance = async (req, res) => {
     const { id, amount, type } = req.body;
 
     const response = await changeBalance(id, amount, type);
-    console.log(response);
+
     res.json({ response });
   } catch (error) {
     console.log(error);
@@ -79,6 +132,22 @@ exports.getMovements = async (req, res) => {
         $gte: fromDate,
         $lte: toDate,
       },
+    }).sort({
+      date: -1,
+    });
+    res.json({ movements });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Hubo un error");
+  }
+};
+
+exports.getAllMovements = async (req, res) => {
+  try {
+    const { email } = req.params;
+    console.log(email);
+    let movements = await BankAccountMovement.find({
+      email,
     }).sort({
       date: -1,
     });

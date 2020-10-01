@@ -32,10 +32,11 @@ const LoanMovementSchema = mongoose.Schema({
     default: false,
   },
   id: {
-    type: mongoose.Schema.Types.ObjectId,
-    index: true,
-    required: true,
-    auto: true,
+    type: Number,
+    // type: mongoose.Schema.Types.ObjectId,
+    // index: true,
+    // required: true,
+    // auto: true,
   },
 });
 

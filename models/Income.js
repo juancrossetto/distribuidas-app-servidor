@@ -35,10 +35,11 @@ const IncomeSchema = mongoose.Schema({
     require: true,
   },
   id: {
-    type: mongoose.Schema.Types.ObjectId,
-    index: true,
-    required: true,
-    auto: true,
+    // type: mongoose.Schema.Types.ObjectId,
+    type: Number,
+    // index: true,
+    // required: true,
+    // auto: true,
   },
 });
 
