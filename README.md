@@ -1,12 +1,12 @@
-# distribuidas-app-servidor
+# My Budget App Server
 repo app distribuidas prespuestos server
 
 
 ## Despliegue
 Para poder levantar el servidor, realice lo siguientes pasos:
 ### Clonar repositorio
-- Clonar este repositorio a tu maquina local usando: 
-`https://github.com/juancrossetto/distribuidas-app-servidor.git`
+- Clonar este repositorio a tu maquina local, abriendo una consola y ejecutando: 
+`git clone https://github.com/juancrossetto/distribuidas-app-servidor.git`
 
 ### Configuración
 - En el destino donde se clono el repositorio, abrir una consola con permisos de administrador y ejecutar el siguiente comando:
@@ -18,7 +18,7 @@ npm install
 npm run dev
 ```
 
-La aplicación se ejecutará en el puerto 4000
+La aplicación se ejecutará en el puerto 4000 y estara conectada a una Base de Datos de MongoDB en la Nube.
 
 ### Importar Tests
 1. [Descargar Postman](https://www.postman.com/)
