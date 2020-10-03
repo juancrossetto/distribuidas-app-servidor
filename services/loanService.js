@@ -4,7 +4,7 @@ const LoanMovement = require("../models/LoanMovement");
 exports.getAllDueLoansMovements = async () => {
   try {
     return await LoanMovement.find({
-      paid: false,
+      paid: "false",
       dueDate: {
         $lte: new Date(),
       },
@@ -29,27 +29,23 @@ exports.updateLoanMovement = async (movement) => {
 exports.getMonthSumLoans = async (email, month, year) => {
   try {
     return await Loan.aggregate([
-        {
-          $addFields: {
-            month: { $month: "$date" },
-            year: { $year: "$date" },
-          },
+      {
+        $addFields: {
+          month: { $month: "$date" },
+          year: { $year: "$date" },
         },
-        {
-          $match: {
-            $and: [
-              { email: email },
-              { month: month },
-              { year: year },
-            ],
-          },
+      },
+      {
+        $match: {
+          $and: [{ email: email }, { month: month }, { year: year }],
         },
-        {
-            $group: {
-                _id: '$type',
-                amount: { $sum: '$amount' }
-            }
+      },
+      {
+        $group: {
+          _id: "$type",
+          amount: { $sum: "$amount" },
         },
+      },
     ]);
   } catch (error) {
     throw Error("Hubo un error al obtener los prestamos");
@@ -60,16 +56,16 @@ exports.getWeeklyLoans = async (email, from_date, to_date) => {
   try {
     return await LoanMovement.find(
       {
-        email:email,
+        email: email,
         dueDate: {
           $gte: from_date,
-          $lt:  to_date,
+          $lt: to_date,
         },
       },
       {
-        _id:1,
-        loan:1,
-        dueDate:1,
+        _id: 1,
+        loan: 1,
+        dueDate: 1,
       }
     );
   } catch (error) {

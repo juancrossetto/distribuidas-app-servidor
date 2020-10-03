@@ -29,7 +29,7 @@ const InvestmentSchema = mongoose.Schema({
     require: true,
   },
   deposited: {
-    type: Boolean,
+    type: String,
     require: false,
     default: false,
   },

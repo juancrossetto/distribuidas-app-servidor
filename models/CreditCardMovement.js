@@ -27,7 +27,7 @@ const CreditCardMovementSchema = mongoose.Schema({
     require: true,
   },
   paid: {
-    type: Boolean,
+    type: String,
     require: false,
     default: false,
   },

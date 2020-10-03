@@ -124,7 +124,7 @@ exports.createLoanMovement = async (req, res) => {
 exports.getAllMovements = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log(email);
+
     let movements = await LoanMovement.find({
       email,
     }).sort({

@@ -102,7 +102,7 @@ exports.payOverdueFees = async (req, res) => {
     if (email) {
       const movementsDues = await CreditCardMovement.find({
         email,
-        paid: false,
+        paid: "false",
         dueDate: {
           $lt: new Date(),
         },

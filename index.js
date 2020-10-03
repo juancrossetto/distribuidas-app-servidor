@@ -97,12 +97,11 @@ const CreditCardDueDatesSchedule = async () => {
 const BudgetFeesSchedule = async () => {
   try {
     const movements = await getAllDueLoansMovements();
-
     for (const movement of movements) {
       const { bankAccount, amount } = movement;
       // Se vencio la cuota  ,se debe pagar
       await changeBalance(bankAccount, amount, "Prestamo Tomado");
-      movement.paid = true;
+      movement.paid = "true";
       await updateLoanMovement(movement);
       const token = await getTokenByEmail(movement.email);
       const response = await sendPushNotification(
@@ -124,7 +123,7 @@ const TimeDepositsSchedule = async () => {
   for (const timeDeposit of timeDeposits) {
     if (timeDeposit.dueDate <= new Date()) {
       if (
-        !timeDeposit.deposited ||
+        timeDeposit.deposited === "false" ||
         timeDeposit.automaticRenovation === "true"
       ) {
         //depositar plata en cuenta
@@ -153,7 +152,7 @@ const TimeDepositsSchedule = async () => {
         timeDeposit.dueDate = await addDaysCurrentDateWithoutFormat(
           timeDeposit.days
         );
-        timeDeposit.deposited = true;
+        timeDeposit.deposited = "true";
         await updateInvestment(timeDeposit);
         //debitar monto de PF por la renovación
         await changeBalance(

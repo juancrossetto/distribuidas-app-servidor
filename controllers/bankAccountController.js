@@ -145,7 +145,6 @@ exports.getMovements = async (req, res) => {
 exports.getAllMovements = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log(email);
     let movements = await BankAccountMovement.find({
       email,
     }).sort({
