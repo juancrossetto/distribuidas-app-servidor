@@ -1,0 +1,893 @@
+{
+	"info": {
+		"_postman_id": "e0dc5a38-f1d9-45c7-a703-caa5ffe2e4ba",
+		"name": "Apis Distribuidas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "expenses",
+			"item": [
+				{
+					"name": "get expenses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "681b5f7b-953a-4ecc-8051-ba0901682ef4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/expenses/test@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"expenses",
+								"test@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create expense",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c66cf968-bc41-425f-867a-0f198eaa73e7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"email\":\"test@gmail.com\",\r\n    \"paymentType\":\"Credit Card\",\r\n    \"paymentId\":\"1\",\r\n    \"expenseType\":\"extraordinario\",\r\n    \"detail\":\"-\",\r\n    \"category\":\"Otros\",    \r\n    \"amount\":200,\r\n    \"date\":\"10-03-2020\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/expenses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"expenses",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "budgets",
+			"item": [
+				{
+					"name": "create budget",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "97e67882-92ac-429e-8088-d175f3d0965b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"1\",\r\n    \"email\":\"test@gmail.com\",\r\n    \"category\":\"Otros\",    \r\n    \"amount\":2000,\r\n    \"date\":\"10-18-2020\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/budgets/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"budgets",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get budgets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fee2be21-2477-4a14-87b2-99b4cd7306aa",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"waltershilman@gmail.com\",\r\n    \"month\":9,\r\n    \"year\":2020\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/budgets/test@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"budgets",
+								"test@gmail.com"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "bankAccounts",
+			"item": [
+				{
+					"name": "changeBalance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "885e2262-17b1-4e79-ae4d-3cb4cc4b4446",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"1\",\r\n    \"amount\":100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/bankaccounts/changeBalance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"bankaccounts",
+								"changeBalance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get bank accounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa32c986-7df3-4f58-b03b-9597386290e9",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/bankaccounts/test@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"bankaccounts",
+								"test@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create bank account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ed5dace-49f5-4f70-9b94-02a60d349060",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"1\",\r\n    \"email\":\"test@gmail.com\",\r\n    \"cbu\":\"2039483628392847261854\",\r\n    \"entity\":\"HSBC\",\r\n    \"debitCard\":\"1463920394839554\",\r\n    \"alias\":\"Tarjeta 2\",\r\n    \"balance\":100000,\r\n    \"date\":\"11-03-2020\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/bankaccounts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"bankaccounts",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "waltershilman@gmail.com",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "loans",
+			"item": [
+				{
+					"name": "get loans",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5516816b-a477-4fd6-b984-94dc9a8a6d89",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"waltershilman@gmail.com\",\r\n    \"month\":9,\r\n    \"year\":2020\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/loans/test@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"loans",
+								"test@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create loan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5516816b-a477-4fd6-b984-94dc9a8a6d89",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 7000,\r\n    \"type\": \"REA\",\r\n    \"paymentMethod\": \"EFE\",\r\n    \"bankAccount\": \"\",\r\n    \"bankAccountDescription\": \"\",\r\n    \"fees\": 0,\r\n    \"date\": \"2020-10-03T01:56:32.264Z\",\r\n    \"email\": \"test@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/loans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"loans"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "investments",
+			"item": [
+				{
+					"name": "get investments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbafe835-cb59-4a4c-866c-6f16f9743b0c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/investments/test@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"investments",
+								"test@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create investments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbafe835-cb59-4a4c-866c-6f16f9743b0c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deposited\": false,\r\n    \"type\": \"Plazo Fijo\",\r\n    \"amount\": 67899,\r\n    \"date\": \"2020-10-03T02:00:53.615Z\",\r\n    \"days\": 56,\r\n    \"interestRate\": 57,\r\n    \"bankAccount\": \"5f753846451e6a1240ffb7e6\",\r\n    \"bankAccountDescription\": \"Tarjeta 1\",\r\n    \"dueDate\": \"2020-11-26T02:00:53.616Z\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"automaticRenovation\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/investments/waltershilman@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"investments",
+								"waltershilman@gmail.com"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "creditCard",
+			"item": [
+				{
+					"name": "get credit cards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbafe835-cb59-4a4c-866c-6f16f9743b0c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/creditCards/test@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"creditCards",
+								"test@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create credit card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "97e67882-92ac-429e-8088-d175f3d0965b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": 3782882828228282,\r\n    \"entity\": \"Santander\",\r\n    \"name\": \"Main2\",\r\n    \"expiry\": \"1991\",\r\n    \"closeDateSummary\": \"2020-10-02T00:00:00.000Z\",\r\n    \"dueDateSummary\": \"2020-10-02T00:00:00.000Z\",\r\n    \"date\": \"2020-10-01T01:50:54.175Z\",\r\n    \"email\": \"test@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/creditcards/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"creditcards",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "incomes",
+			"item": [
+				{
+					"name": "get incomes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "681b5f7b-953a-4ecc-8051-ba0901682ef4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/incomes/test@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"incomes",
+								"test@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create incomes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "681b5f7b-953a-4ecc-8051-ba0901682ef4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"amount\": 10500,\r\n    \"bankAccount\": \"1\",\r\n    \"bankAccountDescription\": \"Francés Pesos\",\r\n    \"category\": \"ADP\",\r\n    \"paymentMethod\": \"BAN\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"date\": \"2020-10-03T15:43:13.141Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/incomes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"incomes",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "utils",
+			"item": [
+				{
+					"name": "get weekly maturities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f39e92e-0d32-4dda-a5ac-5e9065361f08",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/weeklymaturities/test@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"weeklymaturities",
+								"test@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get amount spent by payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30118e97-1f7e-4129-8e24-6f67a83f9dff",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"paymentType\":\"Credit Card\", \r\n    \"id\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/expenses/getbypayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"expenses",
+								"getbypayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get monthly expenses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a6060cf5-eb03-41a1-afbd-7a9d0ecff880",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"test@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/expenses/monthlyexpenses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"expenses",
+								"monthlyexpenses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get budget variation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3891668c-d24e-4284-8a77-c9bbd04daca5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"test@gmail.com\",\r\n    \"month\":10,\r\n    \"year\":2020\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/budgets/getvariation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"budgets",
+								"getvariation"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
