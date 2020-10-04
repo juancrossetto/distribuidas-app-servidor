@@ -1,5 +1,7 @@
 # My Budget App Server
-repo app distribuidas prespuestos server
+Repositorio de Servidor para My Budget App.
+El mismo fue desarrollado en NodeJS con MongoDB Atlas, hosteado en Heroku.
+Ademas contiene un proceso batch realizado con Cron que corre cada 6 hs por el tema de notificaciones.
 
 
 ## Despliegue
